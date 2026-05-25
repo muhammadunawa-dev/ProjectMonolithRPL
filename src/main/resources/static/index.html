@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Toko Online Sakinah Kids</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0D1B2A;--blue:#1565C0;--lblue:#1E88E5;
+  --teal:#00897B;--lteal:#E0F2F1;
+  --red:#E53935;--lred:#FFEBEE;
+  --amber:#F59E0B;--lamber:#FFF8E1;
+  --green:#2E7D32;--lgreen:#E8F5E9;
+  --bg:#F8FAFC;--bg2:#FFFFFF;--bg3:#F1F5F9;
+  --text:#1E293B;--text2:#64748B;--text3:#94A3B8;
+  --border:#E2E8F0;--border2:#CBD5E1;
+  --radius:8px;--radius-lg:12px;
+  --sidebar-w:220px;
+}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px}
+.app{display:flex;min-height:100vh}
+/* ── Sidebar ─────────────────────────── */
+.sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--navy);display:flex;flex-direction:column;flex-shrink:0;position:sticky;top:0;height:100vh}
+.sidebar-brand{padding:1.1rem 1rem;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:center;gap:10px}
+.brand-icon{width:34px;height:34px;border-radius:8px;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.brand-text{color:#fff;font-size:14px;font-weight:600}
+.brand-sub{color:#90A4AE;font-size:11px}
+.nav-section{padding:.75rem 0}
+.nav-label{font-size:10px;font-weight:600;color:#546E7A;letter-spacing:1px;padding:0 1rem .4rem;text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:10px;padding:.52rem 1rem;cursor:pointer;color:#B0BEC5;font-size:13px;border:none;background:none;width:100%;text-align:left;border-left:3px solid transparent;transition:background .15s}
+.nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-item.active{background:rgba(21,101,192,.25);color:#fff;border-left-color:var(--lblue)}
+.nav-item svg{width:17px;height:17px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.sidebar-footer{margin-top:auto;padding:1rem;border-top:1px solid rgba(255,255,255,.1)}
+.user-chip{display:flex;align-items:center;gap:10px;padding:.5rem;border-radius:8px;cursor:pointer}
+.user-chip:hover{background:rgba(255,255,255,.06)}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:600;flex-shrink:0}
+.user-name{color:#fff;font-size:13px;font-weight:500}
+.user-role{color:#78909C;font-size:11px}
+/* ── Main ────────────────────────────── */
+.main{flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.topbar{background:#fff;border-bottom:1px solid var(--border);padding:.7rem 1.5rem;display:flex;align-items:center;gap:1rem;position:sticky;top:0;z-index:10}
+.topbar-title{font-size:16px;font-weight:600;flex:1}
+.content{flex:1;padding:1.5rem;overflow-y:auto;display:flex;flex-direction:column;gap:1.25rem}
+/* ── Buttons ─────────────────────────── */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:.38rem .85rem;border-radius:var(--radius);border:1px solid var(--border2);background:#fff;color:var(--text);font-size:13px;cursor:pointer;transition:background .15s;font-family:inherit}
+.btn:hover{background:var(--bg)}
+.btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn-primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+.btn-primary:hover{background:#1976D2}
+.btn-danger{background:var(--red);color:#fff;border-color:var(--red)}
+.btn-danger:hover{background:#C62828}
+.btn-sm{padding:.26rem .6rem;font-size:12px}
+/* ── Cards ───────────────────────────── */
+.card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
+.card-header{padding:.85rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.card-title{font-size:14px;font-weight:600}
+.card-body{padding:1.25rem}
+/* ── Stats ───────────────────────────── */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.stat-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:1rem 1.25rem}
+.stat-label{font-size:11px;color:var(--text2);margin-bottom:6px;font-weight:500;text-transform:uppercase;letter-spacing:.5px}
+.stat-value{font-size:26px;font-weight:700}
+.stat-sub{font-size:11px;color:var(--text3);margin-top:4px}
+/* ── Table ───────────────────────────── */
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:11px;font-weight:600;color:var(--text2);padding:.55rem 1rem;border-bottom:1px solid var(--border);background:var(--bg3);text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
+td{padding:.7rem 1rem;font-size:13px;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg3)}
+/* ── Badges ──────────────────────────── */
+.badge{display:inline-flex;align-items:center;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-pending{background:var(--lamber);color:#92400E}
+.badge-processing{background:#DBEAFE;color:#1E40AF}
+.badge-shipped{background:#EDE9FE;color:#4C1D95}
+.badge-delivered{background:var(--lgreen);color:#14532D}
+.badge-cancelled{background:var(--lred);color:#7F1D1D}
+.badge-admin{background:#DBEAFE;color:#1E40AF}
+.badge-user{background:var(--lteal);color:#004D40}
+.badge-public{background:var(--lgreen);color:#14532D}
+.badge-low{background:var(--lred);color:#7F1D1D}
+.badge-ok{background:var(--lgreen);color:#14532D}
+/* ── Forms ───────────────────────────── */
+.form-group{margin-bottom:.9rem}
+.form-label{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:5px;display:block}
+.form-input{width:100%;padding:.48rem .75rem;border:1px solid var(--border2);border-radius:var(--radius);background:#fff;color:var(--text);font-size:13px;font-family:inherit;transition:border-color .15s}
+.form-input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(21,101,192,.12)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+/* ── Modal ───────────────────────────── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:100}
+.overlay.open{display:flex}
+.modal{background:#fff;border-radius:var(--radius-lg);width:480px;max-width:95vw;max-height:90vh;overflow-y:auto;border:1px solid var(--border)}
+.modal-header{padding:.9rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-title{font-size:14px;font-weight:600}
+.modal-body{padding:1.25rem}
+.modal-footer{padding:.75rem 1.25rem;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px}
+/* ── Login ───────────────────────────── */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg)}
+.login-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem;width:380px;max-width:95vw}
+.login-logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:1.5rem}
+.login-logo-icon{width:42px;height:42px;border-radius:10px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:22px}
+/* ── Alert / Toast ───────────────────── */
+.alert{padding:.6rem 1rem;border-radius:var(--radius);font-size:13px;margin-bottom:.75rem;display:flex;align-items:center;gap:8px}
+.alert-error{background:var(--lred);color:#7F1D1D;border:1px solid #FECACA}
+.alert-success{background:var(--lgreen);color:#14532D;border:1px solid #BBF7D0}
+.alert-info{background:#DBEAFE;color:#1E3A8A;border:1px solid #BFDBFE}
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;z-index:200;background:#fff;border:1px solid var(--border2);border-radius:var(--radius-lg);padding:.7rem 1rem;display:flex;align-items:center;gap:10px;font-size:13px;min-width:220px;transform:translateY(80px);opacity:0;transition:all .25s;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+.toast-success{border-left:3px solid var(--teal)}
+.toast-error{border-left:3px solid var(--red)}
+/* ── Search ──────────────────────────── */
+.search-bar{display:flex;align-items:center;gap:8px;padding:.45rem .75rem;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg3);flex:1;max-width:260px}
+.search-bar svg{width:15px;height:15px;flex-shrink:0;stroke:var(--text2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.search-bar input{border:none;background:none;outline:none;font-size:13px;color:var(--text);width:100%;font-family:inherit}
+/* ── Product grid ────────────────────── */
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:1rem}
+.product-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;transition:border-color .15s,transform .1s}
+.product-card:hover{border-color:var(--blue);transform:translateY(-2px)}
+.product-thumb{height:110px;background:var(--bg3);display:flex;align-items:center;justify-content:center}
+.product-thumb svg{width:36px;height:36px;stroke:var(--text3);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:.6}
+.product-info{padding:.75rem}
+.product-name{font-size:13px;font-weight:600;margin-bottom:3px}
+.product-cat{font-size:11px;color:var(--text3);background:var(--bg3);padding:2px 6px;border-radius:4px;display:inline-block}
+.product-price{font-size:14px;font-weight:700;color:var(--blue);margin-top:6px}
+/* ── Tab ─────────────────────────────── */
+.tab-row{display:flex;border-bottom:1px solid var(--border);padding:0 .25rem}
+.tab-btn{padding:.55rem .9rem;font-size:12px;font-weight:500;cursor:pointer;border:none;background:none;color:var(--text2);font-family:inherit;border-bottom:2px solid transparent;display:flex;align-items:center;gap:5px;transition:color .15s}
+.tab-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tab-btn.active{color:var(--blue);border-bottom-color:var(--blue)}
+/* ── API info ────────────────────────── */
+.ep-row{display:flex;align-items:center;gap:10px;padding:.5rem .75rem;border-radius:var(--radius);background:var(--bg3);font-size:12px;border:1px solid var(--border)}
+.method-get{color:#1565C0;font-weight:700;font-family:monospace;min-width:54px}
+.method-post{color:#1B5E20;font-weight:700;font-family:monospace;min-width:54px}
+.method-put{color:#E65100;font-weight:700;font-family:monospace;min-width:54px}
+.method-delete{color:#B71C1C;font-weight:700;font-family:monospace;min-width:54px}
+.method-patch{color:#4A148C;font-weight:700;font-family:monospace;min-width:54px}
+.ep-path{font-family:monospace;flex:1}
+.ep-desc{color:var(--text2);font-size:11px;min-width:160px}
+/* ── Misc ────────────────────────────── */
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.5rem;color:var(--text3);gap:.5rem}
+.empty-state svg{width:38px;height:38px;stroke:currentColor;fill:none;stroke-width:1.2;opacity:.5;stroke-linecap:round;stroke-linejoin:round}
+.spinner{width:20px;height:20px;border:2.5px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+.status-dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:5px}
+.dot-green{background:var(--teal)}
+.dot-amber{background:var(--amber)}
+.dot-red{background:var(--red)}
+</style>
+</head>
+<body>
+
+<!-- ════════════════ LOGIN ════════════════ -->
+<div id="login-screen" class="login-wrap">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-logo-icon">🛒</div>
+      <div>
+        <div style="font-size:18px;font-weight:700">Toko Sakinah Kids</div>
+        <div style="font-size:12px;color:var(--text2)"> Project Final RPL Kelas C</div>
+      </div>
+    </div>
+    <div id="login-alert" style="display:none"></div>
+    <div class="form-group">
+      <label class="form-label">Username</label>
+      <input class="form-input" id="inp-username" type="text" placeholder="admin" value="admin"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input class="form-input" id="inp-password" type="password" placeholder="••••••••" value="admin123"/>
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:.5rem" id="btn-login">
+      Login
+    </button>
+<!--    <div class="alert alert-info" style="margin-top:1rem;margin-bottom:0;font-size:12px">-->
+
+<!--    </div>-->
+  </div>
+</div>
+
+<!-- ════════════════ APP ════════════════ -->
+<div id="main-app" class="app" style="display:none">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">🛒</div>
+      <div>
+        <div class="brand-text">Toko Sakinah Kids</div>
+        <div class="brand-sub">Project Final RPL</div>
+      </div>
+    </div>
+    <nav class="nav-section">
+      <div class="nav-label">Menu</div>
+      <button class="nav-item active" data-page="dashboard">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Dashboard
+      </button>
+      <button class="nav-item" data-page="products">
+        <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+        Produk
+      </button>
+      <button class="nav-item" data-page="orders">
+        <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        Order
+      </button>
+      <div class="nav-label" style="margin-top:1rem">Akun</div>
+      <button class="nav-item" data-page="profile">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Profil
+      </button>
+      <button class="nav-item" data-page="api-info">
+        <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        Info API
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-chip" id="btn-logout">
+        <div class="avatar" id="sidebar-avatar">A</div>
+        <div>
+          <div class="user-name" id="sidebar-username">admin</div>
+          <div class="user-role" id="sidebar-role">ADMIN</div>
+        </div>
+        <svg style="margin-left:auto;width:15px;height:15px;stroke:#546E7A;fill:none;stroke-width:2;stroke-linecap:round" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="topbar-title">Dashboard</div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="search-bar" id="global-search" style="display:none">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" placeholder="Cari produk..." id="search-input"/>
+        </div>
+        <button class="btn btn-primary" id="topbar-action-btn" style="display:none">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span id="topbar-action-label">Tambah Produk</span>
+        </button>
+        <span id="api-dot" title="Status API" style="width:8px;height:8px;border-radius:50%;background:var(--amber);display:inline-block"></span>
+      </div>
+    </div>
+
+    <div class="content">
+      <!-- DASHBOARD -->
+      <div id="page-dashboard" class="page" style="display:contents">
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-label">Total Produk</div><div class="stat-value" id="stat-products">—</div><div class="stat-sub">dari database</div></div>
+          <div class="stat-card"><div class="stat-label">Total Order</div><div class="stat-value" id="stat-orders">—</div><div class="stat-sub">semua status</div></div>
+          <div class="stat-card"><div class="stat-label">Pending</div><div class="stat-value" id="stat-pending" style="color:var(--amber)">—</div><div class="stat-sub">menunggu proses</div></div>
+          <div class="stat-card"><div class="stat-label">Delivered</div><div class="stat-value" id="stat-delivered" style="color:var(--teal)">—</div><div class="stat-sub">selesai dikirim</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div class="card">
+            <div class="card-header"><span class="card-title">Produk Terbaru</span><button class="btn btn-sm" onclick="goPage('products')">Lihat semua</button></div>
+            <div id="dash-products"><div class="empty-state"><div class="spinner"></div></div></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">Order Terbaru</span><button class="btn btn-sm" onclick="goPage('orders')">Lihat semua</button></div>
+            <div id="dash-orders"><div class="empty-state"><div class="spinner"></div></div></div>
+          </div>
+        </div>
+        <div class="alert alert-info" id="api-msg"><span id="api-msg-text">Menghubungkan ke API...</span></div>
+      </div>
+
+      <!-- PRODUCTS -->
+      <div id="page-products" style="display:none;flex-direction:column;gap:1rem">
+        <div class="tab-row">
+          <button class="tab-btn active" id="tab-grid" onclick="switchView('grid')">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Grid</button>
+          <button class="tab-btn" id="tab-table" onclick="switchView('table')">
+            <svg viewBox="0 0 24 24"><path d="M3 3h18v18H3z"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>Tabel</button>
+        </div>
+        <div class="card">
+          <div id="product-grid-view" class="card-body"><div class="empty-state"><div class="spinner"></div></div></div>
+          <div id="product-table-view" style="display:none">
+            <table><thead><tr><th>Nama Produk</th><th>Kategori</th><th>Harga</th><th>Stok</th><th>Aksi</th></tr></thead>
+            <tbody id="product-tbody"><tr><td colspan="5"><div class="empty-state"><div class="spinner"></div></div></td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ORDERS -->
+      <div id="page-orders" style="display:none">
+        <div class="card">
+          <div style="overflow-x:auto">
+          <table><thead><tr><th>ID</th><th>User</th><th>Total</th><th>Status</th><th>Alamat</th><th>Tanggal</th><th>Aksi</th></tr></thead>
+          <tbody id="order-tbody"><tr><td colspan="7"><div class="empty-state"><div class="spinner"></div></div></td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROFILE -->
+      <div id="page-profile" style="display:none">
+        <div class="card" style="max-width:460px">
+          <div class="card-header"><span class="card-title">Profil Pengguna</span></div>
+          <div class="card-body">
+            <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem">
+              <div class="avatar" style="width:52px;height:52px;font-size:20px" id="profile-av">A</div>
+              <div>
+                <div style="font-size:17px;font-weight:700" id="profile-name">Admin</div>
+                <span class="badge badge-admin" id="profile-role">ADMIN</span>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:.6rem">
+              <div style="display:flex;justify-content:space-between;padding:.7rem;background:var(--bg3);border-radius:var(--radius)">
+                <span style="font-size:12px;color:var(--text2)">Username</span>
+                <span style="font-size:13px;font-weight:600" id="profile-username">admin</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:.7rem;background:var(--bg3);border-radius:var(--radius)">
+                <span style="font-size:12px;color:var(--text2)">Base URL API</span>
+                <span style="font-size:12px;font-family:monospace;color:var(--blue)">http://localhost:8080</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:.7rem;background:var(--bg3);border-radius:var(--radius)">
+                <span style="font-size:12px;color:var(--text2)">Status koneksi</span>
+                <span style="font-size:13px" id="profile-conn"><span class="status-dot dot-amber"></span>Mengecek...</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:.7rem;background:var(--bg3);border-radius:var(--radius)">
+                <span style="font-size:12px;color:var(--text2)">JWT Token</span>
+                <span style="font-size:11px;font-family:monospace;color:var(--text2);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="profile-token">—</span>
+              </div>
+            </div>
+            <button class="btn btn-danger" style="width:100%;justify-content:center;margin-top:1rem" id="profile-logout">
+              <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              Keluar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- API INFO -->
+      <div id="page-api-info" style="display:none">
+        <div class="card">
+          <div class="card-header"><span class="card-title">Ringkasan Endpoint API</span></div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:.5rem" id="ep-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Tambah/Edit Produk -->
+<div class="overlay" id="modal-product">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-product-title">Tambah Produk</span>
+      <button class="btn btn-sm" onclick="closeModal('modal-product')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="alert alert-error" id="modal-product-error" style="display:none"></div>
+      <div class="form-row">
+        <div class="form-group" style="margin-bottom:0"><label class="form-label">Nama Produk *</label><input class="form-input" id="prod-name" placeholder="Laptop Gaming"/></div>
+        <div class="form-group" style="margin-bottom:0"><label class="form-label">Kategori</label><input class="form-input" id="prod-cat" placeholder="Elektronik"/></div>
+      </div>
+      <div style="height:.75rem"></div>
+      <div class="form-group"><label class="form-label">Deskripsi</label><textarea class="form-input" id="prod-desc" rows="2" placeholder="Deskripsi produk..."></textarea></div>
+      <div class="form-row">
+        <div class="form-group" style="margin-bottom:0"><label class="form-label">Harga (Rp) *</label><input class="form-input" id="prod-price" type="number" placeholder="15000000"/></div>
+        <div class="form-group" style="margin-bottom:0"><label class="form-label">Stok *</label><input class="form-input" id="prod-stock" type="number" placeholder="10"/></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('modal-product')">Batal</button>
+      <button class="btn btn-primary" id="btn-save-product">💾 Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Detail Order -->
+<div class="overlay" id="modal-order">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Detail Order</span>
+      <button class="btn btn-sm" onclick="closeModal('modal-order')">✕</button>
+    </div>
+    <div class="modal-body" id="modal-order-body">—</div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('modal-order')">Tutup</button>
+      <button class="btn btn-danger" id="btn-cancel-order" style="display:none">✕ Batalkan Order</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Buat Order -->
+<div class="overlay" id="modal-new-order">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Buat Order Baru</span>
+      <button class="btn btn-sm" onclick="closeModal('modal-new-order')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="alert alert-error" id="modal-order-error" style="display:none"></div>
+      <div class="form-group"><label class="form-label">Produk *</label><select class="form-input" id="order-product"><option value="">Pilih produk...</option></select></div>
+      <div class="form-group"><label class="form-label">Jumlah *</label><input class="form-input" id="order-qty" type="number" value="1" min="1"/></div>
+      <div class="form-group"><label class="form-label">Alamat Pengiriman *</label><textarea class="form-input" id="order-addr" rows="2" placeholder="Jl. Merdeka No. 1, Madiun"></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('modal-new-order')">Batal</button>
+      <button class="btn btn-primary" id="btn-save-order">🛒 Buat Order</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span id="toast-icon">✓</span>
+  <span id="toast-msg">Berhasil</span>
+</div>
+
+<script>
+const BASE='http://localhost:8080/api';
+let TOKEN='',ROLE='',USERNAME='',USER_ID=1,currentView='grid',editId=null;
+let allProducts=[],allOrders=[],demoMode=false;
+
+const DEMO_P=[
+  {id:1,name:'Laptop Gaming ASUS ROG',description:'Laptop gaming high-end',price:18500000,stock:8,category:'Elektronik',createdAt:'2025-01-10T08:00:00'},
+  {id:2,name:'Samsung Galaxy S24',description:'Smartphone flagship',price:12000000,stock:15,category:'Smartphone',createdAt:'2025-01-12T09:00:00'},
+  {id:3,name:'Kemeja Batik Premium',description:'Batik tulis asli Solo',price:350000,stock:50,category:'Fashion',createdAt:'2025-01-14T10:00:00'},
+  {id:4,name:'Meja Belajar Kayu Jati',description:'Kayu jati pilihan',price:2800000,stock:3,category:'Furnitur',createdAt:'2025-01-15T11:00:00'},
+  {id:5,name:'Headset Sony WH-1000XM5',description:'Noise cancelling premium',price:4200000,stock:12,category:'Elektronik',createdAt:'2025-01-16T12:00:00'},
+];
+const DEMO_O=[
+  {id:1,userId:1,username:'budi',totalAmount:18500000,status:'DELIVERED',shippingAddress:'Jl. Merdeka No. 5, Madiun',createdAt:'2025-01-11T08:00:00',items:[{productId:1,productName:'Laptop Gaming ASUS ROG',quantity:1,unitPrice:18500000,subtotal:18500000}]},
+  {id:2,userId:2,username:'siti',totalAmount:12000000,status:'SHIPPED',shippingAddress:'Jl. Diponegoro No. 3, Surabaya',createdAt:'2025-01-13T09:00:00',items:[{productId:2,productName:'Samsung Galaxy S24',quantity:1,unitPrice:12000000,subtotal:12000000}]},
+  {id:3,userId:1,username:'budi',totalAmount:1050000,status:'PENDING',shippingAddress:'Jl. Ahmad Yani No. 12, Madiun',createdAt:'2025-01-16T10:00:00',items:[{productId:3,productName:'Kemeja Batik Premium',quantity:3,unitPrice:350000,subtotal:1050000}]},
+  {id:4,userId:3,username:'andi',totalAmount:4200000,status:'PROCESSING',shippingAddress:'Jl. Sudirman No. 7, Jakarta',createdAt:'2025-01-17T11:00:00',items:[{productId:5,productName:'Headset Sony WH-1000XM5',quantity:1,unitPrice:4200000,subtotal:4200000}]},
+];
+
+function fmt(n){return'Rp '+Number(n).toLocaleString('id-ID')}
+function fmtDate(d){try{return new Date(d).toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'})}catch{return d}}
+function badge(s){const m={PENDING:'badge-pending',PROCESSING:'badge-processing',SHIPPED:'badge-shipped',DELIVERED:'badge-delivered',CANCELLED:'badge-cancelled'};return`<span class="badge ${m[s]||'badge-pending'}">${s}</span>`}
+function toast(msg,type='success'){const t=document.getElementById('toast');t.className='toast toast-'+type+(type==='success'?' toast-success':' toast-error');document.getElementById('toast-icon').textContent=type==='success'?'✓':'✕';document.getElementById('toast-msg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000)}
+function openModal(id){document.getElementById(id).classList.add('open')}
+function closeModal(id){document.getElementById(id).classList.remove('open')}
+
+async function apiCall(method,path,body){
+  if(demoMode)return null;
+  const opts={method,headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN}};
+  if(body)opts.body=JSON.stringify(body);
+  const r=await fetch(BASE+path,opts);
+  if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error||r.statusText)}
+  if(r.status===204)return true;
+  return r.json();
+}
+
+async function doLogin(){
+  const u=document.getElementById('inp-username').value.trim();
+  const p=document.getElementById('inp-password').value.trim();
+  const btn=document.getElementById('btn-login');
+  const al=document.getElementById('login-alert');
+  btn.textContent='Memuat...';btn.disabled=true;
+  try{
+    let data=null;
+    try{const r=await fetch(BASE+'/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p})});if(r.ok)data=await r.json();}catch{}
+    if(data&&data.token){TOKEN=data.token;ROLE=data.role;USERNAME=data.username;demoMode=false;}
+    else{demoMode=true;TOKEN='demo-token';ROLE='ADMIN';USERNAME=u||'admin';}
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('main-app').style.display='flex';
+    document.getElementById('sidebar-username').textContent=USERNAME;
+    document.getElementById('sidebar-role').textContent=ROLE;
+    document.getElementById('sidebar-avatar').textContent=USERNAME[0].toUpperCase();
+    document.getElementById('profile-name').textContent=USERNAME;
+    document.getElementById('profile-username').textContent=USERNAME;
+    document.getElementById('profile-av').textContent=USERNAME[0].toUpperCase();
+    document.getElementById('profile-role').textContent=ROLE;
+    document.getElementById('profile-token').textContent=TOKEN.length>30?TOKEN.slice(0,28)+'...':TOKEN;
+    const dot=document.getElementById('api-dot');
+    if(demoMode){
+      dot.style.background='var(--amber)';
+      document.getElementById('profile-conn').innerHTML='<span class="status-dot dot-amber"></span>Mode Demo';
+      document.getElementById('api-msg').className='alert alert-info';
+      document.getElementById('api-msg-text').textContent='Mode Demo aktif — Spring Boot tidak terdeteksi. Data ditampilkan dari dummy lokal.';
+    }else{
+      dot.style.background='var(--teal)';
+      document.getElementById('profile-conn').innerHTML='<span class="status-dot dot-green"></span>Terhubung ke API';
+      document.getElementById('api-msg').className='alert alert-success';
+      document.getElementById('api-msg-text').textContent='Terhubung ke Spring Boot API localhost:8080. Data real dari PostgreSQL.';
+    }
+    loadData();buildEP();
+  }catch(e){al.innerHTML='⚠ '+e.message;al.className='alert alert-error';al.style.display='flex';}
+  btn.textContent='Masuk';btn.disabled=false;
+}
+
+async function loadData(){await loadProducts();await loadOrders();renderDashboard();}
+async function loadProducts(){
+  if(demoMode)allProducts=[...DEMO_P];
+  else{try{allProducts=await apiCall('GET','/products')||[]}catch{allProducts=[...DEMO_P]}}
+  renderProducts();
+  const sel=document.getElementById('order-product');
+  sel.innerHTML='<option value="">Pilih produk...</option>';
+  allProducts.forEach(p=>{sel.innerHTML+=`<option value="${p.id}">${p.name} (Stok: ${p.stock})</option>`});
+}
+async function loadOrders(){
+  if(demoMode)allOrders=[...DEMO_O];
+  else{try{const path=ROLE==='ADMIN'?'/orders':'/orders/user/'+USER_ID;allOrders=await apiCall('GET',path)||[];}catch{allOrders=[...DEMO_O]}}
+  renderOrders();
+}
+
+function renderDashboard(){
+  document.getElementById('stat-products').textContent=allProducts.length;
+  document.getElementById('stat-orders').textContent=allOrders.length;
+  document.getElementById('stat-pending').textContent=allOrders.filter(o=>o.status==='PENDING').length;
+  document.getElementById('stat-delivered').textContent=allOrders.filter(o=>o.status==='DELIVERED').length;
+  const dp=document.getElementById('dash-products');
+  if(!allProducts.length){dp.innerHTML='<div class="empty-state"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8"/></svg><p>Belum ada produk</p></div>';return;}
+  dp.innerHTML='<table><tbody>'+allProducts.slice(0,5).map(p=>`<tr><td><div style="font-weight:600">${p.name}</div><span style="font-size:11px;color:var(--text3)">${p.category||'-'}</span></td><td style="text-align:right;font-weight:600">${fmt(p.price)}</td><td style="text-align:right"><span class="badge ${p.stock<5?'badge-low':'badge-ok'}">${p.stock}</span></td></tr>`).join('')+'</tbody></table>';
+  const dor=document.getElementById('dash-orders');
+  if(!allOrders.length){dor.innerHTML='<div class="empty-state"><p>Belum ada order</p></div>';return;}
+  dor.innerHTML='<table><tbody>'+allOrders.slice(0,5).map(o=>`<tr><td><div style="font-weight:600">#${o.id}</div><span style="font-size:12px;color:var(--text3)">${o.username}</span></td><td>${badge(o.status)}</td><td style="text-align:right;font-weight:600">${fmt(o.totalAmount)}</td></tr>`).join('')+'</tbody></table>';
+}
+
+function renderProducts(){
+  const q=document.getElementById('search-input').value.toLowerCase();
+  const prods=q?allProducts.filter(p=>p.name.toLowerCase().includes(q)||(p.category||'').toLowerCase().includes(q)):allProducts;
+  if(currentView==='grid'){
+    const gv=document.getElementById('product-grid-view');
+    if(!prods.length){gv.innerHTML='<div class="empty-state"><p>Tidak ada produk</p></div>';return;}
+    gv.innerHTML='<div class="product-grid">'+prods.map(p=>`<div class="product-card" onclick="openEditProduct(${p.id})"><div class="product-thumb"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div class="product-info"><div class="product-name">${p.name}</div><span class="product-cat">${p.category||'Lainnya'}</span><div class="product-price">${fmt(p.price)}</div><div style="font-size:11px;color:var(--text3);margin-top:3px">Stok: <span style="color:${p.stock<5?'var(--red)':'var(--teal)'};font-weight:600">${p.stock}</span></div></div></div>`).join('')+'</div>';
+  }else{
+    const tb=document.getElementById('product-tbody');
+    if(!prods.length){tb.innerHTML='<tr><td colspan="5"><div class="empty-state"><p>Tidak ada produk</p></div></td></tr>';return;}
+    tb.innerHTML=prods.map(p=>`<tr><td><div style="font-weight:600">${p.name}</div><div style="font-size:11px;color:var(--text3)">${p.description||''}</div></td><td><span style="background:var(--bg3);padding:2px 7px;border-radius:4px;font-size:11px">${p.category||'-'}</span></td><td style="font-weight:600">${fmt(p.price)}</td><td><span class="badge ${p.stock<5?'badge-low':'badge-ok'}">${p.stock} unit</span></td><td><div style="display:flex;gap:6px"><button class="btn btn-sm" onclick="openEditProduct(${p.id})">✏️</button><button class="btn btn-sm btn-danger" onclick="delProduct(${p.id})">🗑</button></div></td></tr>`).join('');
+  }
+}
+
+function renderOrders(){
+  const tb=document.getElementById('order-tbody');
+  if(!allOrders.length){tb.innerHTML='<tr><td colspan="7"><div class="empty-state"><p>Belum ada order</p></div></td></tr>';return;}
+  tb.innerHTML=allOrders.map(o=>`<tr><td style="font-weight:600">#${o.id}</td><td>${o.username}</td><td style="font-weight:600">${fmt(o.totalAmount)}</td><td>${badge(o.status)}</td><td style="font-size:12px;color:var(--text2);max-width:130px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${o.shippingAddress}</td><td style="font-size:12px">${fmtDate(o.createdAt)}</td><td><button class="btn btn-sm" onclick="openOrderDetail(${o.id})">👁</button></td></tr>`).join('');
+}
+
+function openNewProduct(){editId=null;document.getElementById('modal-product-title').textContent='Tambah Produk';['prod-name','prod-cat','prod-desc','prod-price','prod-stock'].forEach(id=>document.getElementById(id).value='');document.getElementById('modal-product-error').style.display='none';openModal('modal-product');}
+function openEditProduct(id){const p=allProducts.find(x=>x.id===id);if(!p)return;editId=id;document.getElementById('modal-product-title').textContent='Edit Produk';document.getElementById('prod-name').value=p.name;document.getElementById('prod-cat').value=p.category||'';document.getElementById('prod-desc').value=p.description||'';document.getElementById('prod-price').value=p.price;document.getElementById('prod-stock').value=p.stock;document.getElementById('modal-product-error').style.display='none';openModal('modal-product');}
+
+async function saveProduct(){
+  const name=document.getElementById('prod-name').value.trim();
+  const price=parseFloat(document.getElementById('prod-price').value);
+  const stock=parseInt(document.getElementById('prod-stock').value);
+  const err=document.getElementById('modal-product-error');
+  if(!name||isNaN(price)||isNaN(stock)){err.innerHTML='⚠ Nama, harga, dan stok wajib diisi.';err.style.display='flex';return;}
+  if(stock<0){err.innerHTML='⚠ Stok tidak boleh negatif.';err.style.display='flex';return;}
+  if(price<=0){err.innerHTML='⚠ Harga harus lebih dari 0.';err.style.display='flex';return;}
+  const body={name,price,stock,category:document.getElementById('prod-cat').value.trim(),description:document.getElementById('prod-desc').value.trim()};
+  const btn=document.getElementById('btn-save-product');btn.innerHTML='<div class="spinner"></div>';btn.disabled=true;
+  try{
+    if(demoMode){if(editId){const i=allProducts.findIndex(x=>x.id===editId);if(i>=0)allProducts[i]={...allProducts[i],...body};}else{allProducts.unshift({...body,id:Date.now(),createdAt:new Date().toISOString()});}}
+    else{if(editId)await apiCall('PUT','/products/'+editId,body);else await apiCall('POST','/products',body);await loadProducts();}
+    closeModal('modal-product');renderProducts();renderDashboard();toast(editId?'Produk diperbarui':'Produk ditambahkan');
+  }catch(e){err.innerHTML='⚠ '+e.message;err.style.display='flex';}
+  btn.innerHTML='💾 Simpan';btn.disabled=false;
+}
+
+async function delProduct(id){
+  if(!confirm('Hapus produk ini?'))return;
+  try{
+    if(demoMode)allProducts=allProducts.filter(p=>p.id!==id);
+    else{await apiCall('DELETE','/products/'+id);await loadProducts();}
+    renderProducts();renderDashboard();toast('Produk dihapus');
+  }catch(e){toast(e.message,'error');}
+}
+
+function openOrderDetail(id){
+  const o=allOrders.find(x=>x.id===id);if(!o)return;
+  const canCancel=o.status==='PENDING'||o.status==='PROCESSING';
+  document.getElementById('modal-order-body').innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+      <div><div style="font-size:16px;font-weight:700">Order #${o.id}</div><div style="font-size:12px;color:var(--text2)">${fmtDate(o.createdAt)}</div></div>
+      ${badge(o.status)}
+    </div>
+    <div style="background:var(--bg3);border-radius:var(--radius);padding:.75rem;margin-bottom:1rem">
+      <div style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:3px">Pelanggan</div>
+      <div style="font-size:13px;font-weight:600">${o.username}</div>
+      <div style="font-size:12px;color:var(--text2);margin-top:4px">📍 ${o.shippingAddress}</div>
+    </div>
+    <div style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px">Item Pesanan</div>
+    ${(o.items||[]).map(i=>`<div style="display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid var(--border)"><div><div style="font-size:13px">${i.productName}</div><div style="font-size:12px;color:var(--text2)">${i.quantity} × ${fmt(i.unitPrice)}</div></div><div style="font-size:13px;font-weight:600">${fmt(i.subtotal)}</div></div>`).join('')}
+    <div style="display:flex;justify-content:space-between;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border)">
+      <span style="font-size:14px;font-weight:600">Total</span>
+      <span style="font-size:16px;font-weight:700;color:var(--blue)">${fmt(o.totalAmount)}</span>
+    </div>
+    ${ROLE==='ADMIN'&&o.status!=='CANCELLED'&&o.status!=='DELIVERED'?`<div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)"><div style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px">Update Status (Admin)</div><div style="display:flex;gap:6px;flex-wrap:wrap">${['PENDING','PROCESSING','SHIPPED','DELIVERED'].map(s=>`<button class="btn btn-sm ${s===o.status?'btn-primary':''}" onclick="updateStatus(${o.id},'${s}')" ${s===o.status?'disabled':''}>${s}</button>`).join('')}</div></div>`:''}
+  `;
+  const cb=document.getElementById('btn-cancel-order');
+  if(canCancel){cb.style.display='flex';cb.onclick=()=>cancelOrder(id);}else{cb.style.display='none';}
+  openModal('modal-order');
+}
+
+async function updateStatus(id,status){
+  try{
+    if(demoMode){const i=allOrders.findIndex(o=>o.id===id);if(i>=0)allOrders[i].status=status;}
+    else await apiCall('PATCH','/orders/'+id+'/status?status='+status);
+    closeModal('modal-order');renderOrders();renderDashboard();toast('Status diperbarui ke '+status);
+  }catch(e){toast(e.message,'error');}
+}
+async function cancelOrder(id){
+  if(!confirm('Batalkan order ini? Stok produk akan dikembalikan.'))return;
+  try{
+    if(demoMode){const i=allOrders.findIndex(o=>o.id===id);if(i>=0)allOrders[i].status='CANCELLED';}
+    else await apiCall('DELETE','/orders/'+id+'/cancel');
+    closeModal('modal-order');renderOrders();renderDashboard();toast('Order dibatalkan');
+  }catch(e){toast(e.message,'error');}
+}
+
+function openNewOrder(){document.getElementById('modal-order-error').style.display='none';['order-product','order-addr'].forEach(id=>document.getElementById(id).value='');document.getElementById('order-qty').value='1';openModal('modal-new-order');}
+async function saveOrder(){
+  const pid=document.getElementById('order-product').value;
+  const qty=parseInt(document.getElementById('order-qty').value);
+  const addr=document.getElementById('order-addr').value.trim();
+  const err=document.getElementById('modal-order-error');
+  if(!pid||!qty||!addr){err.innerHTML='⚠ Semua field wajib diisi.';err.style.display='flex';return;}
+  const p=allProducts.find(x=>x.id==pid);
+  if(p&&qty>p.stock){err.innerHTML=`⚠ Stok tidak mencukupi (sisa ${p.stock}).`;err.style.display='flex';return;}
+  const btn=document.getElementById('btn-save-order');btn.innerHTML='<div class="spinner"></div>';btn.disabled=true;
+  try{
+    if(demoMode){const newO={id:allOrders.length+10,userId:USER_ID,username:USERNAME,totalAmount:(p?p.price:0)*qty,status:'PENDING',shippingAddress:addr,createdAt:new Date().toISOString(),items:[{productId:parseInt(pid),productName:p?p.name:'Produk',quantity:qty,unitPrice:p?p.price:0,subtotal:(p?p.price:0)*qty}]};allOrders.unshift(newO);if(p)p.stock-=qty;}
+    else{await apiCall('POST','/orders/user/'+USER_ID,{shippingAddress:addr,items:[{productId:parseInt(pid),quantity:qty}]});await loadOrders();await loadProducts();}
+    closeModal('modal-new-order');renderOrders();renderProducts();renderDashboard();toast('Order berhasil dibuat!');
+  }catch(e){err.innerHTML='⚠ '+e.message;err.style.display='flex';}
+  btn.innerHTML='🛒 Buat Order';btn.disabled=false;
+}
+
+function switchView(v){currentView=v;document.getElementById('tab-grid').className='tab-btn'+(v==='grid'?' active':'');document.getElementById('tab-table').className='tab-btn'+(v==='table'?' active':'');document.getElementById('product-grid-view').style.display=v==='grid'?'block':'none';document.getElementById('product-table-view').style.display=v==='table'?'block':'none';renderProducts();}
+
+function goPage(name){
+  ['dashboard','products','orders','profile','api-info'].forEach(p=>{
+    const el=document.getElementById('page-'+p);
+    if(el)el.style.display=p===name?(p==='dashboard'?'contents':'flex'):'none';
+  });
+  document.querySelectorAll('.nav-item[data-page]').forEach(n=>n.classList.toggle('active',n.dataset.page===name));
+  const titles={dashboard:'Dashboard',products:'Manajemen Produk',orders:'Manajemen Order',profile:'Profil','api-info':'Info API Endpoint'};
+  document.getElementById('topbar-title').textContent=titles[name]||name;
+  const gs=document.getElementById('global-search');
+  const ab=document.getElementById('topbar-action-btn');
+  const al=document.getElementById('topbar-action-label');
+  if(name==='products'){gs.style.display='flex';ab.style.display='flex';al.textContent='Tambah Produk';ab.onclick=openNewProduct;}
+  else if(name==='orders'){gs.style.display='none';ab.style.display='flex';al.textContent='Buat Order';ab.onclick=openNewOrder;}
+  else{gs.style.display='none';ab.style.display='none';}
+}
+
+function buildEP(){
+  const eps=[
+    {m:'POST',p:'/api/auth/login',d:'Login & dapat JWT token',a:'public'},
+    {m:'POST',p:'/api/auth/register',d:'Daftar akun baru',a:'public'},
+    {m:'GET',p:'/api/products',d:'Lihat semua produk',a:'public'},
+    {m:'GET',p:'/api/products/{id}',d:'Detail produk',a:'public'},
+    {m:'POST',p:'/api/products',d:'Tambah produk baru',a:'admin'},
+    {m:'PUT',p:'/api/products/{id}',d:'Update produk',a:'admin'},
+    {m:'DELETE',p:'/api/products/{id}',d:'Hapus produk',a:'admin'},
+    {m:'PATCH',p:'/api/products/{id}/stock',d:'Update stok',a:'admin'},
+    {m:'POST',p:'/api/orders/user/{id}',d:'Buat order baru',a:'user'},
+    {m:'GET',p:'/api/orders/user/{id}',d:'Order milik user',a:'user'},
+    {m:'GET',p:'/api/orders',d:'Semua order',a:'admin'},
+    {m:'PATCH',p:'/api/orders/{id}/status',d:'Update status order',a:'admin'},
+    {m:'DELETE',p:'/api/orders/{id}/cancel',d:'Batalkan order',a:'user'},
+  ];
+  const mc={GET:'method-get',POST:'method-post',PUT:'method-put',DELETE:'method-delete',PATCH:'method-patch'};
+  const ac={public:'badge-public',admin:'badge-admin',user:'badge-user'};
+  document.getElementById('ep-list').innerHTML=
+    `<div style="font-size:12px;color:var(--text2);margin-bottom:.25rem">Base URL: <code>http://localhost:8080</code></div>`+
+    eps.map(e=>`<div class="ep-row"><span class="${mc[e.m]}">${e.m}</span><span class="ep-path">${e.p}</span><span class="ep-desc">${e.d}</span><span class="badge ${ac[e.a]}">${e.a}</span></div>`).join('');
+}
+
+document.getElementById('btn-login').addEventListener('click',doLogin);
+document.getElementById('inp-password').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+[document.getElementById('btn-logout'),document.getElementById('profile-logout')].forEach(b=>{
+  b.addEventListener('click',()=>{document.getElementById('main-app').style.display='none';document.getElementById('login-screen').style.display='flex';TOKEN='';allProducts=[];allOrders=[];});
+});
+document.querySelectorAll('.nav-item[data-page]').forEach(btn=>{btn.addEventListener('click',()=>goPage(btn.dataset.page));});
+document.getElementById('btn-save-product').addEventListener('click',saveProduct);
+document.getElementById('btn-save-order').addEventListener('click',saveOrder);
+document.getElementById('search-input').addEventListener('input',renderProducts);
+document.querySelectorAll('.overlay').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');});});
+</script>
+</body>
+</html>
